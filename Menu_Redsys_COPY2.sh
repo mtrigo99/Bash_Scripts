@@ -5,13 +5,6 @@ VERDE='\033[0;32m'
 AMARILLO='\e[0;33m'
 SIN_COLOR='\033[0m'
 
-#Variables TPVs
-nombreTerminal #Nombre TPV
-NumPosto=0 #Puesto
-codigoComercio #Código de comercio
-codigoTerminal #Código de la terminal
-keyFirma #key_signature
-
 while true
 do
     clear
@@ -41,29 +34,23 @@ do
             echo -e "${AMARILLO}Los archivos han sido copiados${SIN_COLOR}"
             echo " "
             read -p "Pulsa una tecla para continuar....." ;;
-        2)
-            echo -e "${AMARILLO}¿Nombre de la Máster?${SIN_COLOR}"
-            read nombreTerminal
-            echo -e "${AMARILLO}¿Código de comercio?${SIN_COLOR}"
-            read codigoComercio
-            echo -e "${AMARILLO}¿Código de terminal?${SIN_COLOR}"
-            read codigoTerminal
-            echo -e "${AMARILLO}¿Key_Signature?${SIN_COLOR}"
-            read keyFirma
-            
-echo "[0B150001] 
-DEV_ID=0X0B150001
-STABLE_DEV_CODE=
-NAME=Redsys $nombreTerminal 
-POSTO=1
-COMMERCE_CODE=$codigoComercio
-TERMINAL_CODE=$codigoTerminal
-KEY_SIGNATURE=$keyFirma
-CONF_PINPAD=/dev/pinpad0,19200,N,8,1
-VERSION=8.1
-PRINT_CLIENT_RECEIPT_ON_INVOICE=1
-AUTO_REFUND=1" >> ficha.txt
-read -p "Pulsa una tecla para continuar....." ;;
+        2) 
+            while :
+            do
+                clear
+                echo "Submenú opción 1"
+                echo "1. SubOpción 1"cp
+                echo "2. SubOpción 2"
+                echo "3. Regresar al menú principal"
+                read subopcion
+
+                case $subopcion in
+                    1) echo "Subopción 1 pulsada";;
+                    2) echo "Subopción 2 pulsada";;
+                    3) break ;;
+
+                esac
+            done ;;
 
         3) read -p "Pulsa una tecla para continuar...." ;;
         4) ls -lah /dev/ttyACM*
