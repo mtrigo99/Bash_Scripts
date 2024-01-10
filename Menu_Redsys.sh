@@ -5,6 +5,13 @@ VERDE='\033[0;32m'
 AMARILLO='\e[0;33m'
 SIN_COLOR='\033[0m'
 
+archivo_win="wrstdrvs_pruebas.win"
+# Extraer los valores de STABLE_DEV_CODE y encontrar el máximo
+max_stable_dev_code=$(grep "STABLE_DEV_CODE" "$archivo_win" | cut -d'=' -f2 | sort -n | tail -n 1)
+max_stable_dev_code=$((max_stable_dev_code + 1))
+
+
+
 #Variables TPVs
 nombreTerminal #Nombre TPV
 NumPosto=0 #Puesto
@@ -51,9 +58,10 @@ do
             echo -e "${AMARILLO}¿Key_Signature?${SIN_COLOR}"
             read keyFirma
             
-echo "[0B150001] 
+echo "
+[0B150001] 
 DEV_ID=0X0B150001
-STABLE_DEV_CODE=
+STABLE_DEV_CODE=$max_stable_dev_code
 NAME=Redsys $nombreTerminal 
 POSTO=1
 COMMERCE_CODE=$codigoComercio
@@ -62,7 +70,10 @@ KEY_SIGNATURE=$keyFirma
 CONF_PINPAD=/dev/pinpad0,19200,N,8,1
 VERSION=8.1
 PRINT_CLIENT_RECEIPT_ON_INVOICE=1
-AUTO_REFUND=1" >> ficha.txt
+AUTO_REFUND=1" >> wrstdrvs_pruebas.win
+
+nano wrstdrvs_pruebas.win
+
 read -p "Pulsa una tecla para continuar....." ;;
 
         3) read -p "Pulsa una tecla para continuar...." ;;
