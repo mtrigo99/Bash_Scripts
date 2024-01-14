@@ -43,7 +43,17 @@ do
     case $opcion in
         
         1) 
+            directorio="Backup"
             chmod 777 Ficheros_Redsys/*
+
+            if [ -d "$directorio" ]; then
+                cp -p /home/winrest/files/data/wrstdrvs.win Backup/
+            else
+            # Crear el directorio si no existe
+            mkdir "$directorio"
+            cp -p /home/winrest/files/data/wrstdrvs.win Backup/
+            fi
+
             cp -p /home/winrest/files/data/wrstdrvs.win Backup/
             cp -p /home/winrest/files/data/wrstdrvs.win /home/winrest/files/data/wrstdrvs.win.old
             cp -p Ficheros_Redsys/before_winrest /sbin
