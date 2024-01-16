@@ -43,26 +43,48 @@ do
     case $opcion in
         
         1) 
-            directorio="Backup"
-            chmod 777 Ficheros_Redsys/*
+           while :
+            do
+                clear
+                echo -e "${VERDE}Copiar archivos"
+                echo ""
+                echo -e "${AMARILLO}1.${SIN_COLOR} Copiar archivos en la Máster"
+                echo -e "${AMARILLO}2.${SIN_COLOR} Copiar 99-pinpad.rules resto TPVs (Por ssh)"
+                echo ""
+                #echo "2. SubOpción 2"
+                echo -e "${AMARILLO}3.${SIN_COLOR} Regresar al menú principal"
+                read subopcion
 
-            if [ -d "$directorio" ]; then
-                cp -p /home/winrest/files/data/wrstdrvs.win Backup/
-            else
-            # Crear el directorio si no existe
-            mkdir "$directorio"
-            cp -p /home/winrest/files/data/wrstdrvs.win Backup/
-            fi
+                case $subopcion in
+                    1)  directorio="Backup"
+                        chmod 777 Ficheros_Redsys/*
 
-            cp -p /home/winrest/files/data/wrstdrvs.win Backup/
-            cp -p /home/winrest/files/data/wrstdrvs.win /home/winrest/files/data/wrstdrvs.win.old
-            cp -p Ficheros_Redsys/before_winrest /sbin
-            cp -p Ficheros_Redsys/caTpvpcImplantado.pem /home/winrest
-            cp -p Ficheros_Redsys/libImplantadoLinux.so /home/winrest
-            cp -p Ficheros_Redsys/99-pinpad.rules /root/etc/udev/rules.d/ 
-            echo -e "${AMARILLO}Los archivos han sido copiados${SIN_COLOR}"
-            echo " "
-            read -p "Pulsa una tecla para continuar....." ;;
+                        if [ -d "$directorio" ]; then
+                            cp -p /home/winrest/files/data/wrstdrvs.win Backup/
+                        else
+                        # Crear el directorio si no existe
+                        mkdir "$directorio"
+                        cp -p /home/winrest/files/data/wrstdrvs.win Backup/
+                        fi
+
+                        cp -p /home/winrest/files/data/wrstdrvs.win Backup/
+                        cp -p /home/winrest/files/data/wrstdrvs.win /home/winrest/files/data/wrstdrvs.win.old
+                        cp -p Ficheros_Redsys/before_winrest /sbin
+                        cp -p Ficheros_Redsys/caTpvpcImplantado.pem /home/winrest
+                        cp -p Ficheros_Redsys/libImplantadoLinux.so /home/winrest
+                        cp -p Ficheros_Redsys/99-pinpad.rules ~/etc/udev/rules.d/ 
+                        echo -e "${AMARILLO}Los archivos han sido copiados${SIN_COLOR}"
+                        read -p "Pulsa una tecla para continuar....." ;;
+                    2) 
+                        echo "Introduce la IP de la TPV: "
+                        read iptpv
+                        echo "La ip introducida es: $iptpv"
+                        scp Ficheros_Redsys/99-pipad.rules root@$iptpv:/root/etc/udev/rules.d/ || echo "Hay errores"
+                        ;;
+                    3) break ;;
+
+                esac
+            done ;; 
         2)                       
 
 # Pedir al usuario que ingrese un número
@@ -119,8 +141,9 @@ read -p "Pulsa ENTER para continuar....." ;;
                 echo -e "${VERDE}Submenú Otras configuraciones${SIN_COLOR}"
                 echo ""
                 echo -e "${AMARILLO}1.${SIN_COLOR} Actualizar TPV"
+                echo ""
                 #echo "2. SubOpción 2"
-                echo -e "${AMARILLO}3.${SIN_COLOR} Regresar al menú principal"
+                echo -e "${AMARILLO}2.${SIN_COLOR} Regresar al menú principal"
                 read subopcion
 
                 case $subopcion in
