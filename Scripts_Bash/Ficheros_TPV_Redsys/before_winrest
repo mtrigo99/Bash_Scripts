@@ -1,0 +1,5 @@
+#!/bin/bash
+#Start CoLinux
+sleep 10
+#cd /home/CoLinux
+#./CoLinux -p . &
