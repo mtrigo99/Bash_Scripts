@@ -146,7 +146,10 @@ read -p "Pulsa ENTER para continuar....." ;;
                 read subopcion
 
                 case $subopcion in
-                    1) echo "Subopción 1 pulsada";;
+                    1) read -p "Introduce la IP de la TPV (No máster): " direcip
+                    scp Ficheros_Redsys/Actualizacion_wap/WinREST_FO_Pro_v2023.8.22099.wap root@$direcip:/
+                    
+                        echo "Subopción 1 pulsada";;
                     #2) echo "Subopción 2 pulsada";;
                     2) break ;;
 
