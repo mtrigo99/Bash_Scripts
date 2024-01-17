@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Version 1.0
+#Version 1.2
 
 ROJO='\033[0;31m'
 VERDE='\033[0;32m'
@@ -72,14 +72,13 @@ do
                         cp -p Ficheros_Redsys/before_winrest /sbin
                         cp -p Ficheros_Redsys/caTpvpcImplantado.pem /home/winrest
                         cp -p Ficheros_Redsys/libImplantadoLinux.so /home/winrest
-                        cp -p Ficheros_Redsys/99-pinpad.rules ~/etc/udev/rules.d/ 
+                        cp -p Ficheros_Redsys/99-pinpad.rules /etc/udev/rules.d/ 
                         echo -e "${AMARILLO}Los archivos han sido copiados${SIN_COLOR}"
                         read -p "Pulsa una tecla para continuar....." ;;
                     2) 
-                        echo "Introduce la IP de la TPV: "
-                        read iptpv
-                        echo "La ip introducida es: $iptpv"
-                        scp Ficheros_Redsys/99-pipad.rules root@$iptpv:/root/etc/udev/rules.d/ || echo "Hay errores"
+                        read -p "Introduce la IP de la TPV (No máster): " direcip
+                        scp Ficheros_Redsys/99-pinpad.rules root@$direcip:/etc/udev/rules.d/
+                        
                         ;;
                     3) break ;;
 
@@ -130,7 +129,7 @@ do
     #((max_stable_dev_code++))
 done
 
-nano $archivo_win
+vi $archivo_win
 echo ""
 read -p "Pulsa ENTER para continuar....." ;;
 
@@ -148,8 +147,8 @@ read -p "Pulsa ENTER para continuar....." ;;
 
                 case $subopcion in
                     1) echo "Subopción 1 pulsada";;
-                    2) echo "Subopción 2 pulsada";;
-                    3) break ;;
+                    #2) echo "Subopción 2 pulsada";;
+                    2) break ;;
 
                 esac
             done ;;
